@@ -2,7 +2,8 @@
 
 ## Как установить
 
-клонируете репозиторий 
+Клонируете репозиторий 
+
 ```git clone https://github.com/qqiwi92/short.git```
 или 
 ```gh repo clone qqiwi92/short``` 
