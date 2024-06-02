@@ -99,8 +99,8 @@ export default function Home() {
           </div>
         </div>
         <ul className="flex flex-col gap-5 mx-auto py-2 w-fit">
-          <h2 className="">Выжимка за неделю</h2>
-          <p className="flex gap-1 flex-wrap max-w-lg">
+          <h2 className="">Digest за неделю</h2>
+          <p className="flex gap-1 flex-wrap max-w-lg rounded-xl bg-black/5 p-4">
             {data.map((item, newsCount) => {
               return (
                 <>
