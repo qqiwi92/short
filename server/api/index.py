@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 import json
 from flask_cors import CORS
 import threading
-
+from start_cron import run_schedule
 app = Flask(__name__)
 CORS(app)
 
@@ -10,6 +10,10 @@ CORS(app)
 @app.route("/", methods=["GET"])
 def healthchecker():
     return {"status": "success", "message": "To get data go to /data"}
+@app.route("/start", methods=["GET"])
+def start():
+    run_schedule()
+    return {"status": "success", "message": "started"}
 
 
 @app.route("/data", methods=["GET"])

@@ -4,7 +4,7 @@ import time
 import json
 import requests
 
-
+STARTED=False
 def get_html(url):
     try:
         response = requests.get(url)
@@ -64,14 +64,11 @@ def job():
 
 
 def run_schedule():
-    schedule.every(5).seconds.do(job)
-    while True:
-        schedule.run_pending()
-        time.sleep(4)
+    global STARTED
+    if not(STARTED):
+        STARTED = True
+        schedule.every(5).seconds.do(job)
+        while True:
+            schedule.run_pending()
+            time.sleep(4)
 
-
-def start():
-    run_schedule()
-
-
-start()
