@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start-chron-news": "python api/start_chron.py",
+    "start-cron-news": "python api/start_cron.py",
     "flask-dev": "pip install -r requirements.txt && python -m flask --app api/index run -p 8000 --reload ",
     "next-dev": "next dev",
-    "dev": "concurrently \"pnpm run next-dev\" \"pnpm run start-chron-news\" \"pnpm run flask-dev\"",
+    "dev": "concurrently \"pnpm run next-dev\" \"pnpm run start-cron-news\" \"pnpm run flask-dev\"",
     "build": "next build",
-    "start": "next start && python api/start_chron.py",
+    "start": "pnpm run dev",
     "lint": "next lint"
   },
   
