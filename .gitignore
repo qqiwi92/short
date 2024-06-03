@@ -36,4 +36,4 @@ yarn-error.log*
 next-env.d.ts
 
 # cron data 
-data.json
+api/data.json

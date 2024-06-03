@@ -222,7 +222,7 @@ function AddKeyword({
             });
           }
         }}
-        className="px-5 py-1 h-full border rounded-xl hover:bg-secondary transition"
+        className="px-5 py-1 h-10 border rounded-xl hover:bg-secondary transition "
       >
         +
       </button>
