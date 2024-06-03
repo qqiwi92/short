@@ -4,8 +4,8 @@
   "description": "Second server for shorter!",
   "main": "index.js",
   "scripts": {
-    "start": "vercel dev",
-    "deploy": "vercel deploy --prod"
+    "start": "npx vercel dev",
+    "deploy": "npx vercel deploy --prod"
   },
   "devDependencies": {
     "vercel": "^19.2.0"

@@ -1,9 +1,13 @@
 .vercel
+*.log
+*.pyc
+__pycache__
 
-
-
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-.yarn/install-state.gz
+# Environments 
+.env 
+.venv 
+env/ 
+venv/ 
+ENV/ 
+env.bak/ 
+venv.bak/ 
