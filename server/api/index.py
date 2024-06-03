@@ -7,12 +7,12 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route("/api/health", methods=["GET"])
+@app.route("/", methods=["GET"])
 def healthchecker():
-    return {"status": "success", "message": "Integrate Flask Framework with Next.js"}
+    return {"status": "success", "message": "To get data go to /data"}
 
 
-@app.route("/api/data", methods=["GET"])
+@app.route("/data", methods=["GET"])
 def send_data():
     try:
         with open("api/data.json", "r", encoding="utf-8") as file:
