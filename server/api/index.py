@@ -9,7 +9,7 @@ CORS(app)
 
 @app.route("/", methods=["GET"])
 def healthchecker():
-    return {"status": "success", "message": os.listdir()}
+    return {"status": "success", "message": os.listdir("api")}
 @app.route("/start", methods=["GET"])
 def start():
     
