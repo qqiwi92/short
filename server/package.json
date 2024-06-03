@@ -4,7 +4,7 @@
   "description": "Second server for shorter!",
   "main": "index.js",
   "scripts": {
-    "start": "npx vercel dev",
+    "start": "npx vercel dev && python api/start_cron.py",
     "deploy": "npx vercel deploy --prod"
   },
   "devDependencies": {
@@ -14,5 +14,8 @@
   "license": "ISC",
   "engines": {
     "node": "18.x"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
   }
 }
