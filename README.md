@@ -12,8 +12,8 @@
 
 1. вход в проект: ```cd short```
 2. выбор раздела
-    1. Фронтенд: ```cd short-client && npm i && npm run dev```
-    2. Бэкенд: ```cd short-server && py main.py```
+    1. Фронтенд: ```npm i && npm run dev```
+    2. Бэкенд: ```npm i && npm run flask-dev```
 
 ## Как потестить
 

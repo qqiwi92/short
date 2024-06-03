@@ -43,7 +43,7 @@ def parse_news_titles(html_content):
         news_data_list = [
             {
                 "date": date,
-                "link": link,
+                "link": 'https://habr.com' + link,
                 "title": title
             }
             for title, date, link in zip(news_titles, publication_times, links)
