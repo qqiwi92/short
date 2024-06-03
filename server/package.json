@@ -11,5 +11,8 @@
     "vercel": "^19.2.0"
   },
   "author": "Dima Levkin",
-  "license": "ISC";
+  "license": "ISC",
+  "engines": {
+    "node": "18.x"
+  }
 }

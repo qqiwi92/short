@@ -1,9 +1,3 @@
 {
-    "redirects": [{ "source": "/", "destination": "/api" }],
-    "builds":[
-        {
-            "src": "requirements.txt",
-            "use": "@vercel/python"
-        }
-    ]
+    "redirects": [{ "source": "/", "destination": "/api" }]
   }
