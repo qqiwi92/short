@@ -24,12 +24,16 @@ type Filters = {
 
 export default function Home() {
   const [data, setData] = useState<Data[]>([]);
+  const URL = process.env.NEXT_PUBLIC_VERCEL_URL
+  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
+  : "http://localhost:3000/api";
+
   const [selectedNews, setSelectedNews] = useState(-1);
   useEffect(() => {
     async function getNews() {
       try {
         // const response = await fetch('http://localhost:5000/api/mock-data')
-        const response = await fetch("/api/data", {
+        const response = await fetch(`${URL}/data`, {
           next: {
             revalidate: 5,
           },
