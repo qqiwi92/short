@@ -8,7 +8,6 @@
     "start": "pnpm run dev",
     "lint": "next lint"
   },
-  
   "dependencies": {
     "brace-expansion": "^4.0.0",
     "class-variance-authority": "^0.7.0",

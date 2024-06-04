@@ -24,21 +24,24 @@ type Filters = {
 
 export default function Home() {
   const [data, setData] = useState<Data[]>([]);
-
+  const [error, setError] = useState<boolean>(false);
   const [selectedNews, setSelectedNews] = useState(-1);
   useEffect(() => {
     async function getNews() {
       try {
-        const response = await fetch(`/mock-data`, {
+        const response = await fetch(`/api/data`, {
           next: {
             revalidate: 5,
           },
         });
-        const news = await response.json();
-        console.log('response: ', news)
-        setData(news);
+        const news: { data: Data[]; error: boolean } = await response.json();
+        if (news.error) {
+          setError(true);
+        }
+
+        setData(news.data);
       } catch (error) {
-        console.log(error);
+        setError(true);
       }
     }
 
@@ -60,8 +63,8 @@ export default function Home() {
   return (
     <div className="mx-auto">
       <div className="flex gap-5">
-        <div className="border-r border-border/50 h-fit sticky top-20 px-6 border-dashed flex flex-col items-center justify-start gap-5">
-          <h2 className="">Критерии поиска</h2>
+        <div className="border-r  min-w-fit border-border/50 h-fit sticky top-20 px-6 border-dashed flex flex-col transition items-center justify-start gap-5">
+          <h2 className="whitespace-nowrap">Критерии поиска</h2>
           <div className="rounded-xl border-border border p-3 w-full h-full flex items-center flex-col justify-center gap-3 ">
             <div className="flex flex-col items-center justify-center gap-2 w-full">
               <h3 className="font-bold text-xl w-full">Фильтры</h3>
@@ -99,31 +102,58 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <ul className="flex flex-col gap-5 mx-auto py-2 w-fit">
+        <ul className="flex flex-col gap-5 mx-auto w-fit">
           <h2 className="">Digest за неделю</h2>
-          <p className="flex gap-1 flex-wrap max-w-lg rounded-xl bg-black/5 p-4">
-            {data.map((item, newsCount) => {
-              return (
-                <>
-                  {item.title.split(" ").map((word, wordCount) => (
-                    <motion.a
-                      onHoverStart={() => setSelectedNews(newsCount)}
-                      href={item.link	}
-                      key={wordCount}
-                      onHoverEnd={() => setSelectedNews(-1)}
-                      className={`border-b-2 border-dashed  ${newsCount === selectedNews ? "border-accent" : "border-border/75"}`}
-                    >
-                      {word}
-                    </motion.a>
-                  ))}
-                  .{" "}
-                  <span className="rounded-full border border-border w-4 h-4 flex items-center justify-center text-sm font-mono ">
-                    {newsCount + 1}
-                  </span>
-                </>
-              );
-            })}
+          <p
+            className={`flex gap-1 transition flex-wrap  duration-300 rounded-xl bg-black/5 p-4 ${
+              !error && data.length === 0
+                ? "opacity-0 translate-y-2"
+                : "opacity-100 translate-y-0"
+            } `}
+          >
+            {error ? (
+              <span>не удалось загрузить данные с сервера</span>
+            ) : (
+              <>
+                {data.map((item, newsCount) => {
+                  if (newsCount > 3) return null;
+                  return (
+                    <>
+                      {item.title.split(" ").map((word, wordCount) => (
+                        <motion.a
+                          onHoverStart={() => setSelectedNews(newsCount)}
+                          href={item.link}
+                          key={wordCount}
+                          onHoverEnd={() => setSelectedNews(-1)}
+                          className={`border-b-2 border-dashed  ${
+                            newsCount === selectedNews
+                              ? "border-accent"
+                              : "border-border/75"
+                          }`}
+                        >
+                          {word}
+                        </motion.a>
+                      ))}
+                      .{" "}
+                      <span className="rounded-full border border-border w-4 h-4 flex items-center justify-center text-sm font-mono ">
+                        {newsCount + 1}
+                      </span>
+                    </>
+                  );
+                })}
+              </>
+            )}
           </p>
+          {!error && (
+            <>
+              <h2>Все новости</h2>
+              <div className="flex flex-col gap-2">
+                {data.map((item) => (
+                  <News item={item} key={item.title} />
+                ))}
+              </div>
+            </>
+          )}
         </ul>
       </div>
     </div>
@@ -141,7 +171,9 @@ function FilterOption({ title, filters, setFilters }: filterOptionsProps) {
   return (
     <div
       draggable={false}
-      className={`border font-bold cursor-pointer rounded-xl select-none flex gap-3 justify-start items-center px-4 py-2 w-full ${selected && "bg-primary"} `}
+      className={`border font-bold cursor-pointer rounded-xl select-none flex gap-3 justify-start items-center px-4 py-2 w-full ${
+        selected && "bg-primary"
+      } `}
       onClick={() =>
         setFilters({
           ...filters,
@@ -213,15 +245,42 @@ function AddKeyword({
           e.preventDefault();
           if (keyword.length !== 0 && keyword.trim().split(" ").length == 1) {
             setKeywords((previous) => {
-
               return [...previous, keyword];
             });
           }
         }}
-        className="px-5 py-1 h-10 border rounded-xl hover:bg-secondary transition "
+        className="px-5 py-1 h-10 select-none font-bold border rounded-xl hover:bg-secondary transition "
       >
         +
       </button>
     </form>
+  );
+}
+
+function News({ item }: { item: Data }) {
+  const [showMore, setShowMore] = useState(false);
+  return (
+    <div className="flex flex-col gap-3 cursor-pointer" onClick={() => setShowMore(!showMore)}>
+      <div
+        draggable={false}
+        className="bg-black/5 rounded-xl p-3 flex-col  justify-between"
+      >
+        <div className="">{item.title} </div>
+        <div className="flex justify-between text-sm text-foreground/75">
+          <a href={item.link} className="">
+            habr.com
+          </a>
+          <div className=" text-right">{item.date}</div>
+        </div>
+        <motion.div initial={{height:0, paddingTop: 0, opacity: 0}} animate={{height: showMore?'auto':0, paddingTop: showMore?"0.5rem": 0, opacity: showMore?1:0}} transition={{duration:0.1}} className="text-sm text-foreground/75 overflow-hidden">
+          AMD представила новые процессоры Ryzen 9000 на базе архитектуры Zen 5,
+          включая модели Ryzen 9, Ryzen 7 и Ryzen 5, а также серверные
+          процессоры EPYC поколения Turin, демонстрируя значительное
+          превосходство над Intel в производительности и поддержке будущих
+          технологий через чипсет X870 и долгосрочную поддержку сокета AM5 до
+          2027 года.
+        </motion.div>
+      </div>
+    </div>
   );
 }
