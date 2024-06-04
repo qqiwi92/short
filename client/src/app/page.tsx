@@ -62,10 +62,10 @@ export default function Home() {
   });
   return (
     <div className="mx-auto">
-      <div className="flex gap-5">
-        <div className="border-r  min-w-fit border-border/50 h-fit sticky top-20 px-6 border-dashed flex flex-col transition items-center justify-start gap-5">
+      <div className="flex flex-col md:flex-row gap-5">
+        <div className="border-r  min-w-fit border-border/50 h-fit block md:sticky top-20 px-6 border-dashed flex flex-col transition items-center justify-start gap-5">
           <h2 className="whitespace-nowrap">Критерии поиска</h2>
-          <div className="rounded-xl border-border border p-3 w-full h-full flex items-center flex-col justify-center gap-3 ">
+          <div className="rounded-xl border-border border p-3 w-full h-full flex items-center flex-col justify-center gap-3 bg-background">
             <div className="flex flex-col items-center justify-center gap-2 w-full">
               <h3 className="font-bold text-xl w-full">Фильтры</h3>
               {[
@@ -260,10 +260,13 @@ function AddKeyword({
 function News({ item }: { item: Data }) {
   const [showMore, setShowMore] = useState(false);
   return (
-    <div className="flex flex-col gap-3 cursor-pointer" onClick={() => setShowMore(!showMore)}>
+    <div
+      className="flex flex-col gap-3 cursor-pointer"
+      onClick={() => setShowMore(!showMore)}
+    >
       <div
         draggable={false}
-        className="bg-black/5 rounded-xl p-3 flex-col  justify-between"
+        className="bg-black/5 rounded-xl p-3 flex-col  justify-between select-none"
       >
         <div className="">{item.title} </div>
         <div className="flex justify-between text-sm text-foreground/75">
@@ -272,7 +275,16 @@ function News({ item }: { item: Data }) {
           </a>
           <div className=" text-right">{item.date}</div>
         </div>
-        <motion.div initial={{height:0, paddingTop: 0, opacity: 0}} animate={{height: showMore?'auto':0, paddingTop: showMore?"0.5rem": 0, opacity: showMore?1:0}} transition={{duration:0.1}} className="text-sm text-foreground/75 overflow-hidden">
+        <motion.div
+          initial={{ height: 0, paddingTop: 0, opacity: 0 }}
+          animate={{
+            height: showMore ? "auto" : 0,
+            paddingTop: showMore ? "0.5rem" : 0,
+            opacity: showMore ? 1 : 0,
+          }}
+          transition={{ duration: 0.1 }}
+          className="text-sm text-foreground/75 overflow-hidden"
+        >
           AMD представила новые процессоры Ryzen 9000 на базе архитектуры Zen 5,
           включая модели Ryzen 9, Ryzen 7 и Ryzen 5, а также серверные
           процессоры EPYC поколения Turin, демонстрируя значительное
