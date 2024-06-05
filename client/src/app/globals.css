@@ -21,10 +21,10 @@
     --destructive-foreground: 160 82% 2%;
     --border: 164 84% 20%;
     --input: 164 84% 20%;
-    --ring: 216 85% 40%;
+    --ring: 0 0% 0%;
     --radius: 0.5rem;
   }
- 
+
   .dark {
     --background: 166 87% 3%;
     --foreground: 157 80% 98%;
@@ -44,7 +44,7 @@
     --destructive-foreground: 157 80% 10%;
     --border: 166 87% 60%;
     --input: 166 86% 80%;
-    --ring: 216 85% 60%;
+    --ring: 0 0% 0%;
   }
 }
 
@@ -57,7 +57,9 @@
   }
 }
 
-h2{
-  @apply text-3xl font-bold text-center
+h2 {
+  @apply text-center text-3xl font-bold;
 }
-
+input{ 
+  @apply focus:ring-0 focus:ring-transparent
+}
