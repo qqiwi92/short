@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  :root {
+    --background: 164 85% 97%;
+    --foreground: 160 82% 2%;
+    --card: 164 85% 97%;
+    --card-foreground: 160 82% 2%;
+    --popover: 164 85% 97%;
+    --popover-foreground: 160 82% 2%;
+    --primary: 160 85% 51%;
+    --primary-foreground: 160 82% 2%;
+    --secondary: 201 85% 75%;
+    --secondary-foreground: 160 82% 2%;
+    --muted: 164 84% 20%;
+    --muted-foreground: 160 82% 70%;
+    --accent: 216 85% 61%;
+    --accent-foreground: 160 82% 2%;
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 160 82% 2%;
+    --border: 164 84% 20%;
+    --input: 164 84% 20%;
+    --ring: 0 0% 0%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 166 87% 3%;
+    --foreground: 157 80% 98%;
+    --card: 166 87% 3%;
+    --card-foreground: 157 80% 98%;
+    --popover: 166 87% 3%;
+    --popover-foreground: 157 80% 98%;
+    --primary: 160 85% 49%;
+    --primary-foreground: 166 87% 3%;
+    --secondary: 201 84% 25%;
+    --secondary-foreground: 157 80% 98%;
+    --muted: 166 86% 80%;
+    --muted-foreground: 157 80% 98%;
+    --accent: 216 85% 39%;
+    --accent-foreground: 157 80% 98%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 157 80% 10%;
+    --border: 166 87% 60%;
+    --input: 166 86% 80%;
+    --ring: 0 0% 0%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+h2 {
+  @apply text-center text-3xl font-bold;
+}
+input{ 
+  @apply focus:ring-0 focus:ring-transparent
+}
