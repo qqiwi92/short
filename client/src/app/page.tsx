@@ -28,7 +28,6 @@ export default function Page() {
   const [newEmail, setNewEmail] = useState("");
   const [data, setData] = useState<Data[]>([]);
   const [error, setError] = useState<boolean>(false);
-  const [selectedNews, setSelectedNews] = useState(-1);
   useEffect(() => {
     async function getNews() {
       try {
@@ -61,7 +60,7 @@ export default function Page() {
           setValue={setNewTag}
         />
       </div>
-      <List
+      <List isEmail
         title="Емайлы"
         list={emails}
         setList={setEmails}
@@ -86,19 +85,21 @@ function List({
   setList,
   setValue,
   title,
+  isEmail=false
 }: {
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
   list: string[];
   setList: React.Dispatch<React.SetStateAction<string[]>>;
   title: string;
+  isEmail?: boolean;
 }) {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (
       e.key === "Enter" &&
       value.trim() !== "" &&
       !list.includes(value) &&
-      value.length < 40
+      value.length < 40 && (isEmail ? value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i): true)
     ) {
       e.preventDefault();
       setList([...list, value.trim()]);

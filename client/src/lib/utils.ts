@@ -7,5 +7,6 @@ export function cn(...inputs: ClassValue[]) {
 export type Data = {
   date: string;
   link: string;
+  text: string;
   title: string;
 };

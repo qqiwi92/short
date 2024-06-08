@@ -3,7 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Data } from "@/lib/utils";
-export default function Letter({data}: {data: Data[]}) {
+export default function Letter({ data }: { data: Data[] }) {
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 md:px-6 md:py-12">
       <header className="mb-8 md:mb-12">
@@ -16,12 +16,13 @@ export default function Letter({data}: {data: Data[]}) {
       </header>
       <div className="grid gap-3">
         {data.map((item, i) => (
-          <Card key={i} className="flex flex-col gap-4 md:flex-row md:gap-6 p-3 border-border/60">
-            <div className=" rounded-lg bg-foreground/10 object-cover md:w-1/3"></div>
+          <Card
+            key={i}
+            className="flex flex-col gap-4 border-border/60 p-3 md:flex-row md:gap-6"
+          >
+            <div className="rounded-lg bg-foreground/10 object-cover md:w-1/3"></div>
             <div className="grid flex-1 gap-2">
-              <h2 className="text-lg font-semibold md:text-xl">
-                {item.title}
-              </h2>
+              <h2 className="text-lg font-semibold md:text-xl">{item.title}</h2>
               <p className="line-clamp-3 text-gray-500 dark:text-gray-400">
                 Researchers at the NLMK-FROM institute have developed a new
                 method for improving the efficiency of steel production, leading

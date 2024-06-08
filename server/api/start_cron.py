@@ -3,8 +3,9 @@ import schedule
 import time
 import json
 import requests
+import utills.parse_date as parse_date
 
-STARTED=False
+
 def get_html(url):
     try:
         response = requests.get(url)
@@ -42,9 +43,9 @@ def parse_news_titles(html_content):
 
         news_data_list = [
             {
-                "date": date,
-                "link": 'https://habr.com' + link,
-                "title": title
+                "date": parse_date.parse_date(date),
+                "link": "https://habr.com" + link,
+                "title": title,
             }
             for title, date, link in zip(news_titles, publication_times, links)
         ]
@@ -54,21 +55,37 @@ def parse_news_titles(html_content):
         return []
 
 
-
 def job():
     url = "https://habr.com/ru/news/"
     html_content = get_html(url)
-    data = parse_news_titles(html_content)
-    with open("api/data.json", 'w', encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
+    news_data = parse_news_titles(html_content)
+
+    articles = []
+    for news in news_data:
+        article_text = parse_main_text(news["link"])
+        if article_text:
+            articles.append(
+                {
+                    "title": news["title"],
+                    "date": parse_date.parse_date(news["date"]),
+                    "link": news["link"],
+                    "text": article_text,
+                }
+            )
+
+    with open("api/data.json", "w", encoding="utf-8") as f:
+        json.dump(articles, f, ensure_ascii=False, indent=4)
 
 
 def run_schedule():
-    global STARTED
-    if not(STARTED):
-        STARTED = True
-        schedule.every(5).seconds.do(job)
-        while True:
-            schedule.run_pending()
-            time.sleep(4)
+    schedule.every(5).seconds.do(job)
+    while True:
+        schedule.run_pending()
+        time.sleep(4)
 
+
+def start():
+    run_schedule()
+
+
+start()
