@@ -9,16 +9,79 @@ import Letter from "@/components/Letter";
 import { Data } from "@/lib/utils";
 
 export default function Page() {
-  const [tags, setTags] = useLocalStorageState<string[]>("tags", {
+  const [tags, setTags] = useLocalStorageState<string[]>("tag_cloud", {
     defaultValue: [
-      "НЛМК",
-      "металлургия",
-      "ИИ",
-      "IT",
-      "Новые технологии",
       "Инновации",
-      "Оптимизация",
-      "Бизнес",
+      "Innovations",
+      "Trends",
+      "Цифровизация",
+      "Автоматизация",
+      "Цифровая трансформация",
+      "Digital solutions",
+      "Цифровые двойники",
+      "Digital twins",
+      "ИИ",
+      "AI",
+      "IoT",
+      "Интернет вещей",
+      "Big Data",
+      "Блокчейн",
+      "Process mining",
+      "Облачные технологии",
+      "Квантовые вычисления",
+      "Смарт-контракты",
+      "Робототехника",
+      "VR/AR/MR",
+      "Виртуальная и дополненная реальность",
+      "Генеративный",
+      "Распознавание",
+      "Искусственный интеллект",
+      "Машинное обучение",
+      "Глубокое обучение",
+      "Нейронные сети",
+      "Компьютерное зрение",
+      "Обработка естественного языка (NLP)",
+      "Reinforcement Learning",
+      "Low-code",
+      "No-code",
+      "Металлургический(ая)",
+      "Сталь",
+      "Steel",
+      "LLM",
+      "ML",
+      "ChatGPT",
+      "IT",
+      "Кибербезопасность",
+      "Стартапы",
+      "Startups",
+      "YandexGPT",
+      "LLAMA",
+      "GPT (GPT-3, GPT-4)",
+      "BERT",
+      "OpenAI",
+      "DALL·E",
+      "Transformer models",
+      "Generative Adversarial Networks (GAN)",
+      "DeepFake",
+      "Машинное зрение",
+      "Text-to-Image",
+      "Voice-to-text",
+      "Визуализация данных",
+      "Управление цепочками поставок",
+      "Снабжение",
+      "Технологии 5G",
+      "Суперкомпьютеры",
+      "DevOps",
+      "ФинТех",
+      "Token",
+      "Токен",
+      "Микросервисы",
+      "Kubernetes",
+      "API",
+      "Цифровой след",
+      "Цифровая идентификация",
+      "Интеллектуальный анализ данных",
+      "Продвинутая аналитика",
     ],
   });
   const [emails, setEmails] = useLocalStorageState<string[]>("emails", {
@@ -60,7 +123,8 @@ export default function Page() {
           setValue={setNewTag}
         />
       </div>
-      <List isEmail
+      <List
+        isEmail
         title="Емайлы"
         list={emails}
         setList={setEmails}
@@ -85,7 +149,7 @@ function List({
   setList,
   setValue,
   title,
-  isEmail=false
+  isEmail = false,
 }: {
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
@@ -99,7 +163,8 @@ function List({
       e.key === "Enter" &&
       value.trim() !== "" &&
       !list.includes(value) &&
-      value.length < 40 && (isEmail ? value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i): true)
+      value.length < 40 &&
+      (isEmail ? value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i) : true)
     ) {
       e.preventDefault();
       setList([...list, value.trim()]);
@@ -121,7 +186,7 @@ function List({
   return (
     <div className="flex w-full flex-col items-center justify-center">
       <div className="w-full max-w-4xl">
-        <p className="py-1 text-2xl font-bold">
+        <p className="py-1 text-2xl font-bold z-[101]">
           {title}{" "}
           <span className="text-sm text-foreground/50">
             (разделение по enter)
@@ -137,7 +202,7 @@ function List({
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500 hover:bg-transparent hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                className="absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 hover:scale-x-110 text-gray-500 hover:bg-transparent hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                 onClick={() => handleRemoveTag(index)}
               >
                 <IoMdClose className="h-4 w-4" />

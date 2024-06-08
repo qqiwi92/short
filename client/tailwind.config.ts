@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      backgroundImage: {
+        'opacity-radial-gradient': 'radial-gradient(at center, rgba(255, 255, 255, 1.0), rgba(255, 255, 255, 0.5))'
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

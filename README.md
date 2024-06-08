@@ -1,3 +1,5 @@
+<div style="position: absolute; top: 10px; left: 10px; right: 10px; background: #141414; height: 50px; background: #00ff00; border-radius: 20px; "></div>
+
 # Short Hackathon
 
 ## Как установить
