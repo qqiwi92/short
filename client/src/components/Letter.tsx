@@ -8,7 +8,7 @@ export default function Letter({ data }: { data: Data[] }) {
     <div className="mx-auto w-full max-w-6xl px-4 py-8 md:px-6 md:py-12">
       <header className="mb-5">
         <h1 className="text-3xl font-bold tracking-tight md:text-4xl">
-          Digest новостей на эту неделю
+          Digest новостей за эту неделю
         </h1>
         <p className="mt-2 text-gray-500 dark:text-gray-400">
           Shoptalk Europe 2024: Сайрус Бест преуспел в исследовании IBM,

@@ -6,7 +6,6 @@ export async function GET() {
     const json = await data.json();
     return new Response(JSON.stringify({ data: json, error: false }));
   } catch (error) {
-    // return new Response(JSON.stringify({ error: true }));
     return new Response(
       JSON.stringify({
         data: mockData,

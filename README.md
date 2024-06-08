@@ -14,11 +14,9 @@
 
 1. вход в проект: `cd short`
 2. выбор раздела
-   1. Фронтенд: `cd client && npm i && npm run dev`
-   2. Бэкенд:`cd server && pip install -r requirements.txt && python index.py`
-   3. Письмо:
-      `cd email && npm i && npm run dev` <- разработка
-      `cd email && npm i && npm run export` <- экспорт
+   1. Фронтенд: `npm run client-dev`
+   2. Бэкенд:`npm run back-dev`
+   3. Письмо: `npm run mail-dev`
 
 <div style="border-radius: 10px; background-color: #f5f5f5; padding: 10px;">Для разработки функций работы с yandex cloud нужно добавить .env файл в папку server. Чтобы получить это файл пишите <a href="https://t.me/qiwi_92">@qiwi_92</a></div>
 

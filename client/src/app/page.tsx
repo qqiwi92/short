@@ -95,15 +95,15 @@ export default function Page() {
     async function getNews() {
       try {
         const response = await fetch(`/api/data`, {
+          method: "GET",
           next: {
-            revalidate: 5,
-          },
+            revalidate: 600,
+          }
         });
         const news: { data: Data[]; error: boolean } = await response.json();
         if (news.error) {
           setError(true);
         }
-
         setData(news.data);
       } catch (error) {
         setError(true);
@@ -186,7 +186,7 @@ function List({
   return (
     <div className="flex w-full flex-col items-center justify-center">
       <div className="w-full max-w-4xl">
-        <p className="py-1 text-2xl font-bold z-[101]">
+        <p className="z-[101] py-1 text-2xl font-bold">
           {title}{" "}
           <span className="text-sm text-foreground/50">
             (разделение по enter)
@@ -202,7 +202,7 @@ function List({
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 hover:scale-x-110 text-gray-500 hover:bg-transparent hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                className="absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500 hover:scale-x-110 hover:bg-transparent hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                 onClick={() => handleRemoveTag(index)}
               >
                 <IoMdClose className="h-4 w-4" />

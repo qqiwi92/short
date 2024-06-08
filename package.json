@@ -1,0 +1,9 @@
+{
+    "name": "short",
+    "scripts": {
+        "client-dev": "cd client && npm i && npm run dev",
+        "back-dev": "cd server && pip install -r requirements.txt && python index.py",
+        "mail-dev": "cd email && npm i && npm run dev",
+        "test": "cd client && npm i && npm run build"
+    }
+}
