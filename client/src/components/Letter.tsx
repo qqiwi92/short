@@ -22,46 +22,48 @@ export default function Letter({ data }: { data: Data[] }) {
       <div className="grid gap-3">
         {data.map((item, i) => {
           if (i > 20) return null;
-          const [disabled, setDisabled] = useState(false);
-          return (
-            <Card
-              key={i}
-              className={`relative flex flex-col gap-4 border-border/30 p-3 transition md:flex-row md:gap-6 ${disabled ? "opacity-50 border-accent" : "opacity-100"}`}
-            >
-              <div
-                onClick={() => setDisabled(!disabled)}
-                className={`absolute right-3 top-3 h-6 w-6 bg-background transition ${disabled ? "opacity-100" : "opacity-75"}`}
-              >
-                {disabled ? <FaEyeSlash /> : <FaEye />}
-              </div>
-              <div className="grid flex-1 gap-2">
-                <h2 className="pr-3 text-left text-lg font-semibold md:text-xl">
-                  {item.title}
-                </h2>
-                <p className="line-clamp-3 text-gray-500 dark:text-gray-400">
-                  Researchers at the NLMK-FROM institute have developed a new
-                  method for improving the efficiency of steel production,
-                  leading to significant cost savings and reduced environmental
-                  impact.
-                </p>
-                <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                  <CalendarIcon className="h-4 w-4" />
-                  <span>{item.date}</span>
-                  <Separator orientation="vertical" className="h-4" />
-                  <Link
-                    href={item.link}
-                    className="font-medium hover:underline"
-                    prefetch={false}
-                  >
-                    Read more
-                  </Link>
-                </div>
-              </div>
-            </Card>
-          );
+          return <EmailItem key={i} item={item}/>;
         })}
       </div>
     </div>
+  );
+}
+
+function EmailItem({ item }: { item: Data }) {
+  const [disabled, setDisabled] = useState(false);
+  return (
+    <Card
+      className={`relative flex flex-col gap-4 border-border/30 p-3 transition md:flex-row md:gap-6 ${disabled ? "border-accent opacity-50" : "opacity-100"}`}
+    >
+      <div
+        onClick={() => setDisabled(!disabled)}
+        className={`absolute right-3 top-3 h-6 w-6 bg-background transition ${disabled ? "opacity-100" : "opacity-75"}`}
+      >
+        {disabled ? <FaEyeSlash /> : <FaEye />}
+      </div>
+      <div className="grid flex-1 gap-2">
+        <h2 className="pr-3 text-left text-lg font-semibold md:text-xl">
+          {item.title}
+        </h2>
+        <p className="line-clamp-3 text-gray-500 dark:text-gray-400">
+          Researchers at the NLMK-FROM institute have developed a new method for
+          improving the efficiency of steel production, leading to significant
+          cost savings and reduced environmental impact.
+        </p>
+        <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+          <CalendarIcon className="h-4 w-4" />
+          <span>{item.date}</span>
+          <Separator orientation="vertical" className="h-4" />
+          <Link
+            href={item.link}
+            className="font-medium hover:underline"
+            prefetch={false}
+          >
+            Read more
+          </Link>
+        </div>
+      </div>
+    </Card>
   );
 }
 

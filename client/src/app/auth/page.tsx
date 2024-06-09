@@ -49,7 +49,7 @@ export default function Component() {
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password">Пароль</Label>
+                <Label htmlFor="password">Пароль - admin</Label>
                 <Link href="https://t.me/qiwi_92" className="text-sm" prefetch={false}>
                   Забыли пароль?
                 </Link>
@@ -64,7 +64,7 @@ export default function Component() {
           </CardContent>
           <CardFooter>
             <Button type="submit" variant={"secondary"} className="w-full">
-              Войти
+              Войти -admin
             </Button>
           </CardFooter>
         </form>
