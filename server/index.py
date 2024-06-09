@@ -19,7 +19,7 @@ def start_parser():
 
 def start_flask_server():
     # Запускает Flask-сервер в отдельном потоке
-    run_command(["python", "api/flask-server.py"])
+    run_command(["python", "api/flask_server.py"])
 
 
 def signal_handler(sig, frame):

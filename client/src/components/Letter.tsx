@@ -1,8 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Data } from "@/lib/utils";
+import { FaEyeSlash, FaEye } from "react-icons/fa";
+import { useState } from "react";
 export default function Letter({ data }: { data: Data[] }) {
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 md:px-6 md:py-12">
@@ -21,13 +22,20 @@ export default function Letter({ data }: { data: Data[] }) {
       <div className="grid gap-3">
         {data.map((item, i) => {
           if (i > 20) return null;
+          const [disabled, setDisabled] = useState(false);
           return (
             <Card
               key={i}
-              className="flex flex-col gap-4 border-border/30 p-3 md:flex-row md:gap-6"
+              className={`relative flex flex-col gap-4 border-border/30 p-3 transition md:flex-row md:gap-6 ${disabled ? "opacity-50 border-accent" : "opacity-100"}`}
             >
+              <div
+                onClick={() => setDisabled(!disabled)}
+                className={`absolute right-3 top-3 h-6 w-6 bg-background transition ${disabled ? "opacity-100" : "opacity-75"}`}
+              >
+                {disabled ? <FaEyeSlash /> : <FaEye />}
+              </div>
               <div className="grid flex-1 gap-2">
-                <h2 className="text-left text-lg font-semibold md:text-xl">
+                <h2 className="pr-3 text-left text-lg font-semibold md:text-xl">
                   {item.title}
                 </h2>
                 <p className="line-clamp-3 text-gray-500 dark:text-gray-400">

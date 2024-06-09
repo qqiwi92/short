@@ -1,13 +1,17 @@
-import type { Config } from "tailwindcss"
-
+import type { Config } from "tailwindcss";
+const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
+const {
+  default: flattenColorPalette,
+} = require("tailwindcss/lib/util/flattenColorPalette");
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -19,7 +23,8 @@ const config = {
     },
     extend: {
       backgroundImage: {
-        'opacity-radial-gradient': 'radial-gradient(at center, rgba(255, 255, 255, 1.0), rgba(255, 255, 255, 0.5))'
+        "opacity-radial-gradient":
+          "radial-gradient(at center, rgba(255, 255, 255, 1.0), rgba(255, 255, 255, 0.5))",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -62,6 +67,10 @@ const config = {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        appear: {
+          from: { opacity: "0", translateY: "100px" },
+          to: { opacity: "1", translateY: "0px" },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -72,12 +81,24 @@ const config = {
         },
       },
       animation: {
+        appear: "appear 0.2s ease-out",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config
+  plugins: [require("tailwindcss-animate"), addVariablesForColors],
+} satisfies Config;
 
-export default config
+function addVariablesForColors({ addBase, theme }: any) {
+  let allColors = flattenColorPalette(theme("colors"));
+  let newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val]),
+  );
+
+  addBase({
+    ":root": newVars,
+  });
+}
+
+export default config;

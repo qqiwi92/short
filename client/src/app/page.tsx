@@ -7,82 +7,18 @@ import { IoMdClose } from "react-icons/io";
 import useLocalStorageState from "use-local-storage-state";
 import Letter from "@/components/Letter";
 import { Data } from "@/lib/utils";
-
+import { Loader } from "@/components/loader";
+import { GoQuestion } from "react-icons/go";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { toast, useToast } from "@/components/ui/use-toast";
 export default function Page() {
   const [tags, setTags] = useLocalStorageState<string[]>("tag_cloud", {
-    defaultValue: [
-      "Инновации",
-      "Innovations",
-      "Trends",
-      "Цифровизация",
-      "Автоматизация",
-      "Цифровая трансформация",
-      "Digital solutions",
-      "Цифровые двойники",
-      "Digital twins",
-      "ИИ",
-      "AI",
-      "IoT",
-      "Интернет вещей",
-      "Big Data",
-      "Блокчейн",
-      "Process mining",
-      "Облачные технологии",
-      "Квантовые вычисления",
-      "Смарт-контракты",
-      "Робототехника",
-      "VR/AR/MR",
-      "Виртуальная и дополненная реальность",
-      "Генеративный",
-      "Распознавание",
-      "Искусственный интеллект",
-      "Машинное обучение",
-      "Глубокое обучение",
-      "Нейронные сети",
-      "Компьютерное зрение",
-      "Обработка естественного языка (NLP)",
-      "Reinforcement Learning",
-      "Low-code",
-      "No-code",
-      "Металлургический(ая)",
-      "Сталь",
-      "Steel",
-      "LLM",
-      "ML",
-      "ChatGPT",
-      "IT",
-      "Кибербезопасность",
-      "Стартапы",
-      "Startups",
-      "YandexGPT",
-      "LLAMA",
-      "GPT (GPT-3, GPT-4)",
-      "BERT",
-      "OpenAI",
-      "DALL·E",
-      "Transformer models",
-      "Generative Adversarial Networks (GAN)",
-      "DeepFake",
-      "Машинное зрение",
-      "Text-to-Image",
-      "Voice-to-text",
-      "Визуализация данных",
-      "Управление цепочками поставок",
-      "Снабжение",
-      "Технологии 5G",
-      "Суперкомпьютеры",
-      "DevOps",
-      "ФинТех",
-      "Token",
-      "Токен",
-      "Микросервисы",
-      "Kubernetes",
-      "API",
-      "Цифровой след",
-      "Цифровая идентификация",
-      "Интеллектуальный анализ данных",
-      "Продвинутая аналитика",
-    ],
+    defaultValue: defaultValue,
   });
   const [emails, setEmails] = useLocalStorageState<string[]>("emails", {
     defaultValue: [],
@@ -90,15 +26,33 @@ export default function Page() {
   const [newTag, setNewTag] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [data, setData] = useState<Data[]>([]);
+  const [auth, setAuth] = useState(false);
   const [error, setError] = useState<boolean>(false);
+  const { toast } = useToast();
+
   useEffect(() => {
+    async function checkAuth() {
+      const response = await fetch("/api/checkAuth", {
+        method: "GET",
+      });
+      const { auth } = await response.json();
+      console.log(auth);
+      setTimeout(() => {
+        if (auth !== "true") {
+          window.location.href = "/auth";
+        } else {
+          setAuth(true);
+        }
+      }, 1000);
+    }
+    checkAuth();
     async function getNews() {
       try {
         const response = await fetch(`/api/data`, {
           method: "GET",
           next: {
             revalidate: 600,
-          }
+          },
         });
         const news: { data: Data[]; error: boolean } = await response.json();
         if (news.error) {
@@ -114,6 +68,15 @@ export default function Page() {
   }, []);
   return (
     <div className="flex min-h-screen flex-col items-center justify-start gap-5">
+      <Loader
+        loading={!auth}
+        loadingStates={[
+          { text: "Проверяем авторизацию" },
+          { text: "Загружаем контент" },
+          { text: "Создаем фичи" },
+        ]}
+        duration={2000}
+      />
       <div className="flex w-full flex-col gap-2">
         <List
           title="Теги"
@@ -131,6 +94,29 @@ export default function Page() {
         value={newEmail}
         setValue={setNewEmail}
       />
+      <div className="flex items-center justify-center gap-2">
+        <Button
+          onClick={() => toast({ title: "Сохранено 👌", variant: "success" })}
+          className="bg-accent font-bold transition hover:bg-accent/75"
+        >
+          Сохранить
+        </Button>
+        <TooltipProvider>
+          <div className="flex items-center gap-2">
+            <Tooltip delayDuration={50}>
+              <TooltipTrigger>
+                <GoQuestion className="text-xl" />
+              </TooltipTrigger>
+              <TooltipContent side="right" className="max-w-xs">
+                <p>
+                  У вас есть не сохраненные изменения. Чтобы изменить параметры
+                  рассылки, отправате изменения нас сервер
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        </TooltipProvider>
+      </div>
       <div className="flex w-full flex-col items-center justify-center">
         <div className="w-full max-w-4xl">
           <p className="py-1 text-2xl font-bold">Preview письма</p>
@@ -159,6 +145,21 @@ function List({
   isEmail?: boolean;
 }) {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (
+      e.key === "Enter" &&
+      !value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i) &&
+      isEmail
+    ) {
+      e.preventDefault();
+      toast({
+        title: "это не похоже на email", variant: "destructive",
+        description: (
+          <span>
+            обычная почта выглядит так <strong>mit.levkin@vk.com</strong>
+          </span>
+        ),
+      });
+    }
     if (
       e.key === "Enter" &&
       value.trim() !== "" &&
@@ -222,3 +223,77 @@ function List({
     </div>
   );
 }
+
+const defaultValue = [
+  "Инновации",
+  "Innovations",
+  "Trends",
+  "Цифровизация",
+  "Автоматизация",
+  "Цифровая трансформация",
+  "Digital solutions",
+  "Цифровые двойники",
+  "Digital twins",
+  "ИИ",
+  "AI",
+  "IoT",
+  "Интернет вещей",
+  "Big Data",
+  "Блокчейн",
+  "Process mining",
+  "Облачные технологии",
+  "Квантовые вычисления",
+  "Смарт-контракты",
+  "Робототехника",
+  "VR/AR/MR",
+  "Виртуальная и дополненная реальность",
+  "Генеративный",
+  "Распознавание",
+  "Искусственный интеллект",
+  "Машинное обучение",
+  "Глубокое обучение",
+  "Нейронные сети",
+  "Компьютерное зрение",
+  "Обработка естественного языка (NLP)",
+  "Reinforcement Learning",
+  "Low-code",
+  "No-code",
+  "Металлургический(ая)",
+  "Сталь",
+  "Steel",
+  "LLM",
+  "ML",
+  "ChatGPT",
+  "IT",
+  "Кибербезопасность",
+  "Стартапы",
+  "Startups",
+  "YandexGPT",
+  "LLAMA",
+  "GPT (GPT-3, GPT-4)",
+  "BERT",
+  "OpenAI",
+  "DALL·E",
+  "Transformer models",
+  "Generative Adversarial Networks (GAN)",
+  "DeepFake",
+  "Машинное зрение",
+  "Text-to-Image",
+  "Voice-to-text",
+  "Визуализация данных",
+  "Управление цепочками поставок",
+  "Снабжение",
+  "Технологии 5G",
+  "Суперкомпьютеры",
+  "DevOps",
+  "ФинТех",
+  "Token",
+  "Токен",
+  "Микросервисы",
+  "Kubernetes",
+  "API",
+  "Цифровой след",
+  "Цифровая идентификация",
+  "Интеллектуальный анализ данных",
+  "Продвинутая аналитика",
+];
