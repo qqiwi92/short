@@ -1,4 +1,3 @@
-
 import {
   Card,
   CardHeader,
@@ -14,9 +13,10 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import { getCookie, setCookie } from "cookies-next";
+import { PasswordInput } from "@/components/ui/passwordInput";
 
 export default function Component() {
-  if (getCookie("auth", {cookies})==='true') {
+  if (getCookie("auth", { cookies }) === "true") {
     redirect("/");
   }
 
@@ -28,9 +28,11 @@ export default function Component() {
       console.log("set cookie", username, password);
       setCookie("auth", "true", { cookies });
       redirect("/");
-    }   };
+    }
+  };
   return (
-      <Card className="absolute left-1/2 top-1/2 w-full max-w-md -translate-x-1/2 -translate-y-1/2">
+    <div className="absolute left-1/2 top-1/2 w-full max-w-md -translate-x-1/2 -translate-y-1/2 px-2">
+      <Card>
         <CardHeader>
           <CardTitle className="text-2xl">Добро пожаловать!</CardTitle>
           <CardDescription className="text-foreground">
@@ -44,22 +46,22 @@ export default function Component() {
               <Input
                 id="username"
                 name="username"
-                placeholder="введите логин" className="border-black"
+                placeholder="введите логин"
+                className="border-black"
               />
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Пароль - admin</Label>
-                <Link href="https://t.me/qiwi_92" className="text-sm" prefetch={false}>
+                <Link
+                  href="https://t.me/qiwi_92"
+                  className="text-sm"
+                  prefetch={false}
+                >
                   Забыли пароль?
                 </Link>
               </div>
-              <Input
-                id="password"
-                type="password"
-                name="password"
-                placeholder="введите пароль" className="border-black"
-              />
+             <PasswordInput/>
             </div>
           </CardContent>
           <CardFooter>
@@ -69,5 +71,6 @@ export default function Component() {
           </CardFooter>
         </form>
       </Card>
+    </div>
   );
 }
