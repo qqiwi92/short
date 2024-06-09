@@ -40,7 +40,7 @@ export default function Component() {
         <form action={checkPasswordLogin}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="username">Логин</Label>
+              <Label htmlFor="username">Логин - admin</Label>
               <Input
                 id="username"
                 name="username"
@@ -64,7 +64,7 @@ export default function Component() {
           </CardContent>
           <CardFooter>
             <Button type="submit" variant={"secondary"} className="w-full">
-              Войти -admin
+              Войти
             </Button>
           </CardFooter>
         </form>
