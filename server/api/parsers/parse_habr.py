@@ -2,7 +2,12 @@ from bs4 import BeautifulSoup
 import requests
 import sys 
 sys.path.append('..')
-from utills.parse_date_habr import parse_date as parse_date_habr
+from dateparser import parse
+
+
+def parse_date(s):
+    return parse(s).strftime("%d.%m.%y")
+
 
 def get_html(url):
     try:
@@ -41,7 +46,7 @@ def parse_news_titles(html_content):
 
         news_data_list = [
             {
-                "date": parse_date_habr.parse_date(date),
+                "date": parse_date(date),
                 "link": "https://habr.com" + link,
                 "title": title,
             }
@@ -65,10 +70,11 @@ def get():
             articles.append(
                 {
                     "title": news["title"],
-                    "date": parse_date_habr.parse_date(news["date"]),
+                    "date": parse_date(news["date"]),
                     "link": news["link"],
                     "text": article_text,
                 }
             )
 
     return articles
+print(get())

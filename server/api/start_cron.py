@@ -14,16 +14,16 @@ def job():
     with open("data.json", "r", encoding="utf-8") as file:
         data = json.load(file)
     data.extend(parsers.parse_computer_world.get())
-    data.extend(parsers.parse_habr.get())
     data.extend(parsers.parse_technode.get())
+    data.extend(parsers.parse_habr.get())
     with open("data.json", "w", encoding="utf-8") as file:
         json.dump(data, file, indent=4)
 
 def run_schedule():
-    schedule.every(5).seconds.do(job)
+    schedule.every(24).hours.do(job)
     while True:
         schedule.run_pending()
-        time.sleep(4)
+        time.sleep(3600)
 
 
 run_schedule()
