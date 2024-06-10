@@ -2,6 +2,8 @@
 
 # Short Hackathon
 
+[демо](https://lems.vercel.app/)
+
 ## Как установить
 
 Клонируете репозиторий
@@ -18,8 +20,4 @@
    2. Бэкенд:`npm run back-dev`
    3. Письмо: `npm run mail-dev`
 
-<div style="border-radius: 10px; background-color: #f5f5f5; padding: 10px;">Для разработки функций работы с yandex cloud нужно добавить .env файл в папку server. Чтобы получить это файл пишите <a href="https://t.me/qiwi_92">@qiwi_92</a></div>
-
-## Как потестить
-
-[ссылка](https://lems.vercel.app/)
+<div style="border-radius: 10px; background-color: #f5f5f5; padding: 10px;margin: 10px 0px">Для разработки функций работы с yandex cloud нужно добавить .env файл в папку server. Чтобы получить это файл пишите <a href="https://t.me/qiwi_92">@qiwi_92</a></div>

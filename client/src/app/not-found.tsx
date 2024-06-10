@@ -2,7 +2,7 @@ import Link from "next/link"
 
 export default function Component() {
   return (
-    <div className="flex h-[100dvh] flex-col items-center justify-center gap-6 px-4 md:px-6">
+    <div className="flex h-[100dvh] flex-col items-center justify-center gap-6 px-4 md:px-6 -translate-y-20">
       <div className="space-y-4 text-center">
         <div className="inline-block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 border border-border/50 dark:bg-gray-800 dark:text-gray-50">
           Error 404
