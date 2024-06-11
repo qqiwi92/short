@@ -12,17 +12,14 @@ def run_command(command):
 
 
 def start_parser():
-    # Запускает парсер в отдельном потоке
     run_command(["python", "api/start_cron.py"])
 
 
 def start_flask_server():
-    # Запускает Flask-сервер в отдельном потоке
     run_command(["python", "api/flask_server.py"])
 
 
 def signal_handler(sig, frame):
-    # Обрабатывает сигнал Ctrl+C, завершая все потоки
     print("exiting...")
     global parser_process, flask_server_process
     parser_process.terminate()
@@ -31,13 +28,10 @@ def signal_handler(sig, frame):
 
 
 if __name__ == "__main__":
-    # Устанавливаем глобальные переменные для хранения процессов
     global parser_process, flask_server_process
 
-    # Устанавливаем обработчик для SIGINT для завершения процессов
     signal.signal(signal.SIGINT, signal_handler)
 
-    # Запускаем парсер и Flask-сервер в отдельных процессах
     print(colored("+ ", "green"), " starting parser")
     parser_process = subprocess.Popen(
         ["python", "api/start_cron.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE
@@ -51,6 +45,5 @@ if __name__ == "__main__":
         stderr=subprocess.PIPE,
     )
 
-    # Ждем завершения обоих процессов
     parser_process.wait()
     flask_server_process.wait()

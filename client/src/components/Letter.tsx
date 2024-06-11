@@ -37,7 +37,7 @@ function EmailItem({ item }: { item: Data }) {
     >
       <div
         onClick={() => setDisabled(!disabled)}
-        className={`absolute right-3 top-3 h-6 w-6 bg-background transition ${disabled ? "opacity-100" : "opacity-75"}`}
+        className={`absolute right-3 top-3 h-6 cursor-pointer w-6 bg-background transition ${disabled ? "opacity-100" : "opacity-75"}`}
       >
         {disabled ? <FaEyeSlash /> : <FaEye />}
       </div>

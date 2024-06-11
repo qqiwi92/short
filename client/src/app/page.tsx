@@ -122,7 +122,7 @@ export default function Page() {
       <div className="flex w-full flex-col items-center justify-center">
         <div className="w-full max-w-4xl">
           <p className="py-1 text-2xl font-bold">Preview письма</p>
-          <p>{new Date().getDay() === 0 ? <span>Это письмо было сгенерировано сегодня и в 00 часов будет отправлено в рассылке </span>: <span>Это письмо прошлой недели, письмо этой недели будет доступно <span className="font-bold tracking-wide">{nextSunday.getDate()}.{nextSunday.getMonth() + 1}</span></span>} </p>
+          <p className="pb-2">{new Date().getDay() === 0 ? <span>Это письмо было сгенерировано сегодня и в 00 часов будет отправлено в рассылке </span>: <span>Это письмо прошлой недели, письмо этой недели будет доступно <span className="font-bold tracking-wide px-2 py-1 rounded-xl border">{nextSunday.getDate()}.{String(nextSunday.getMonth() + 1).length === 1 ? "0" + String(nextSunday.getMonth() + 1) : String(nextSunday.getMonth() + 1)}.{nextSunday.getFullYear()}</span></span>} </p>
           <div className="relative flex w-full flex-wrap items-center overflow-hidden rounded-xl border p-1">
             <Letter data={data} />
           </div>
