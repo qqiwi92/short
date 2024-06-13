@@ -20,12 +20,8 @@ import { toast, useToast } from "@/components/ui/use-toast";
 import Expand from "@/components/Еxpand";
 import TestingSection from "@/components/TestingSection";
 export default function Page() {
-  const [tags, setTags] = useLocalStorageState<string[]>("tag_cloud", {
-    defaultValue: defaultValue,
-  });
-  const [emails, setEmails] = useLocalStorageState<string[]>("emails", {
-    defaultValue: [],
-  });
+  const [tags, setTags] = useState<string[]>([]);
+  const [emails, setEmails] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [data, setData] = useState<Data[]>([]);
@@ -73,7 +69,27 @@ export default function Page() {
       }
     }
 
+    async function getUserInfo() {
+      try {
+        const response = await fetch(`/api/user_data`, {
+          method: "GET",
+          next: {
+            revalidate: 600,
+          },
+        });
+        const news: { tags: string[]; emails: string[]; error: boolean } =
+          await response.json();
+        if (news.error) {
+          setError(true);
+        }
+        setTags(news.tags);
+        setEmails(news.emails);
+      } catch (error) {
+        setError(true);
+      }
+    }
     getNews();
+    getUserInfo()
   }, []);
   return (
     <div className="flex min-h-screen flex-col items-center justify-start gap-5">
@@ -105,7 +121,16 @@ export default function Page() {
       />
       <div className="flex items-center justify-center gap-2">
         <Button
-          onClick={() => toast({ title: "Сохранено 👌", variant: "success" })}
+          onClick={() => {
+            fetch("/api/save_user_data", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ tags: tags, emails: emails }),
+            });
+            toast({ title: "Сохранено 👌", variant: "success" });
+          }}
           className="bg-accent font-bold transition hover:bg-accent/75"
         >
           Сохранить
@@ -258,77 +283,3 @@ function List({
     </div>
   );
 }
-
-const defaultValue = [
-  "Инновации",
-  "Innovations",
-  "Trends",
-  "Цифровизация",
-  "Автоматизация",
-  "Цифровая трансформация",
-  "Digital solutions",
-  "Цифровые двойники",
-  "Digital twins",
-  "ИИ",
-  "AI",
-  "IoT",
-  "Интернет вещей",
-  "Big Data",
-  "Блокчейн",
-  "Process mining",
-  "Облачные технологии",
-  "Квантовые вычисления",
-  "Смарт-контракты",
-  "Робототехника",
-  "VR/AR/MR",
-  "Виртуальная и дополненная реальность",
-  "Генеративный",
-  "Распознавание",
-  "Искусственный интеллект",
-  "Машинное обучение",
-  "Глубокое обучение",
-  "Нейронные сети",
-  "Компьютерное зрение",
-  "Обработка естественного языка (NLP)",
-  "Reinforcement Learning",
-  "Low-code",
-  "No-code",
-  "Металлургический(ая)",
-  "Сталь",
-  "Steel",
-  "LLM",
-  "ML",
-  "ChatGPT",
-  "IT",
-  "Кибербезопасность",
-  "Стартапы",
-  "Startups",
-  "YandexGPT",
-  "LLAMA",
-  "GPT (GPT-3, GPT-4)",
-  "BERT",
-  "OpenAI",
-  "DALL·E",
-  "Transformer models",
-  "Generative Adversarial Networks (GAN)",
-  "DeepFake",
-  "Машинное зрение",
-  "Text-to-Image",
-  "Voice-to-text",
-  "Визуализация данных",
-  "Управление цепочками поставок",
-  "Снабжение",
-  "Технологии 5G",
-  "Суперкомпьютеры",
-  "DevOps",
-  "ФинТех",
-  "Token",
-  "Токен",
-  "Микросервисы",
-  "Kubernetes",
-  "API",
-  "Цифровой след",
-  "Цифровая идентификация",
-  "Интеллектуальный анализ данных",
-  "Продвинутая аналитика",
-];

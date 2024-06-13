@@ -38,4 +38,6 @@ def run_schedule():
         time.sleep(10)
 
 
-run_schedule()
+if __name__ == "__main__":
+    # run_schedule()
+    print(__name__)

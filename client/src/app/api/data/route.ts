@@ -1,7 +1,7 @@
 export async function GET() {
   try {
-    const data = await fetch("https://1082-5-18-225-126.ngrok-free.app/data", {
-      method: "GET",
+    const data = await fetch(process.env.SERVER_URL + "/data", {
+      method: "GET", cache: "no-store"
     });
     const json = await data.json();
     return new Response(JSON.stringify({ data: json, error: false }));
@@ -11,6 +11,12 @@ export async function GET() {
         data: mockData,
         error: false,
       }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-store, private",
+        },
+      },
     );
   }
 }

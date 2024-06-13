@@ -1,8 +1,8 @@
 import json
-from server.api.rating.relevance_rate import relevance_rate
-from server.api.rating.rate_date import impact_rate
-from server.api.rating.impact_rate import impact_rate
-from server.api.rating.source_authority import authority_rate
+from rating.relevance_rate import relevance_rate
+from rating.rate_date import impact_rate
+from rating.impact_rate import impact_rate
+from rating.source_authority import authority_rate
 import time
 
 

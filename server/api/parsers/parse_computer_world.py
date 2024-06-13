@@ -92,4 +92,3 @@ def get():
             )
 
     return articles
-print(get())
