@@ -8,7 +8,7 @@ interface IExpand {
   maxHeight?: number;
 }
 
-export default function Expand({ children, maxHeight = 100 }: IExpand) {
+export default function Expand({ children, maxHeight = 200 }: IExpand) {
   const [expanded, setExpanded] = useState(false);
   const containerRef = useRef<null | HTMLDivElement>(null);
   useEffect(() => {
@@ -23,11 +23,11 @@ export default function Expand({ children, maxHeight = 100 }: IExpand) {
   return (
     <div className="relative w-full">
       <motion.div
-        initial={{ maxHeight: "100px" }}
+        initial={{ maxHeight: `${maxHeight}px` }}
         animate={{
           maxHeight: expanded
             ? `${containerRef.current?.offsetHeight ?? 0}px`
-            : "100px",
+            : `${maxHeight}px`,
         }}
         transition={{
           type: "spring",

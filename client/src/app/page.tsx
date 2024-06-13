@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { IoMdClose } from "react-icons/io";
-import useLocalStorageState from "use-local-storage-state";
 import Letter from "@/components/Letter";
 import { Data } from "@/lib/utils";
 import { Loader } from "@/components/loader";
@@ -175,8 +174,7 @@ export default function Page() {
               </span>
             )}{" "}
           </p>
-          {/* <div className="relative flex w-full flex-wrap items-center overflow-hidden rounded-xl border p-1"> */}
-          <Expand maxHeight={150}>
+          <Expand maxHeight={250}>
             <Letter data={data} />
           </Expand>
           {/* </div> */}
