@@ -12,7 +12,13 @@ export default function Expand({ children, maxHeight = 100 }: IExpand) {
   const [expanded, setExpanded] = useState(false);
   const containerRef = useRef<null | HTMLDivElement>(null);
   useEffect(() => {
-    setExpanded((containerRef.current?.offsetHeight ?? 0) < 2 * maxHeight);
+    const id = setInterval(() => {
+      if (expanded){
+
+        setExpanded((containerRef.current?.offsetHeight ?? 0) < 2 * maxHeight);
+      }
+    }, 500);
+    return () => clearInterval(id);
   }, []);
   return (
     <div className="relative w-full">
@@ -42,7 +48,7 @@ export default function Expand({ children, maxHeight = 100 }: IExpand) {
       ></div>
 
       <div
-        className={`absolute -bottom-9 left-1/2 border-border/75 -translate-x-1/2 cursor-pointer rounded-xl border bg-background px-2 py-1 text-sm ${(containerRef.current?.offsetHeight ?? 0) < 2 * maxHeight && "hidden"}`}
+        className={`absolute -bottom-9 left-1/2 -translate-x-1/2 cursor-pointer rounded-xl border border-border/75 bg-background px-2 py-1 text-sm ${(containerRef.current?.offsetHeight ?? 0) < 2 * maxHeight && "hidden"}`}
         onClick={() => setExpanded(!expanded)}
       >
         {expanded ? "свернуть" : "еще"}
