@@ -1,13 +1,14 @@
 import requests
 import os
 from dotenv import load_dotenv
-
+import json
 
 load_dotenv()
 
 
 # делает запрос к yandex gpt api для сокращения текста
-def enshorten(text):
+def shorten(text):
+    text = text[:5000]
 
     prompt = {
         "modelUri": os.environ.get("YANDEX_GPT_MODEL_URL"),
@@ -18,7 +19,7 @@ def enshorten(text):
         },
         "messages": [
             {
-                "text": "сократи данный текст до 2-3 предложний, чтобы пользователь понял весь смысл новости из этой выжимки ",
+                "text": "сократи данный текст до 1-2 предложний, чтобы пользователь понял весь смысл новости из этой выжимки ",
                 "role": "system",
             },
             {
@@ -33,5 +34,6 @@ def enshorten(text):
         "Authorization": f"Api-Key {os.environ.get('YANDEX_GPT_API_KEY')}",
     }
     response = requests.post(url, headers=headers, json=prompt)
+    print(response)
     result = response.text
-    return result
+    return json.loads(result)["result"]["alternatives"][0]["message"]["text"]

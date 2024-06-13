@@ -12,11 +12,7 @@ export default function Letter({ data }: { data: Data[] }) {
           Digest новостей за эту неделю
         </h1>
         <p className="mt-2 text-gray-500 dark:text-gray-400">
-          Shoptalk Europe 2024: Сайрус Бест преуспел в исследовании IBM,
-          посвященном генеративному ИИ: Банки и финансовые рынки делают ставку
-          на генеративный ИИ, чтобы оставаться конкурентоспособными, но проблемы
-          с персоналом и культурой сохраняются, несмотря ни на что Group
-          внедряет функциональность GenAI на платформе влияния AnyTag
+          {`На этой неделе мы собрали для вас самые интересные новости. Читайте: \n ${data.slice(0, 3).map((item) => item.title).join(" ")}`}
         </p>
       </header>
       <div className="grid gap-3">
@@ -46,9 +42,7 @@ function EmailItem({ item }: { item: Data }) {
           {item.title}
         </h2>
         <p className="line-clamp-3 text-foreground/80 dark:text-gray-400">
-          Researchers at the NLMK-FROM institute have developed a new method for
-          improving the efficiency of steel production, leading to significant
-          cost savings and reduced environmental impact.
+          {item.text}
         </p>
         <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
           <CalendarIcon className="h-4 w-4" />

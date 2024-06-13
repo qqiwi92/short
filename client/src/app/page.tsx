@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/tooltip";
 import { toast, useToast } from "@/components/ui/use-toast";
 import Expand from "@/components/Еxpand";
-import TestingSection from "@/components/TestingSection";
 export default function Page() {
   const [tags, setTags] = useState<string[]>([]);
   const [emails, setEmails] = useState<string[]>([]);
@@ -88,7 +87,7 @@ export default function Page() {
       }
     }
     getNews();
-    getUserInfo()
+    getUserInfo();
   }, []);
   return (
     <div className="flex min-h-screen flex-col items-center justify-start gap-5">
@@ -119,6 +118,17 @@ export default function Page() {
         setValue={setNewEmail}
       />
       <div className="flex items-center justify-center gap-2">
+      <Button
+          onClick={() => {
+            fetch("/api/send_now", {
+              method: "POST",
+            })
+            toast({ title: "отправляем 👌", variant: "success" });
+          }}
+          className="bg-secondary font-bold transition hover:bg-secondary/75"
+        >
+          отправить сейчас
+        </Button>
         <Button
           onClick={() => {
             fetch("/api/save_user_data", {
@@ -134,6 +144,7 @@ export default function Page() {
         >
           Сохранить
         </Button>
+       
         <TooltipProvider>
           <div className="flex items-center gap-2">
             <Tooltip delayDuration={50}>
@@ -150,7 +161,6 @@ export default function Page() {
           </div>
         </TooltipProvider>
       </div>
-      <TestingSection />
       <div className="flex w-full flex-col items-center justify-center">
         <div className="w-full max-w-4xl">
           <p className="py-1 text-2xl font-bold">Preview письма</p>

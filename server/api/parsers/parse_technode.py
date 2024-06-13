@@ -82,7 +82,7 @@ def get():
                     "title": translate(news["title"]),
                     "link": news["link"],
                     "date": convert_date(news["date"]),
-                    "text": translate(article_text),
+                    "text": article_text,
                 }
             )
 
