@@ -2,7 +2,6 @@
 *.log
 *.pyc
 __pycache__
-data.json
 # Environments 
 .env 
 .venv 
