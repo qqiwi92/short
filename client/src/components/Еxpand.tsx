@@ -44,11 +44,11 @@ export default function Expand({ children, maxHeight = 200 }: IExpand) {
       </motion.div>
 
       <div
-        className={`pointer-events-none absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-background to-background/5 ${expanded ? "opacity-0" : "opacity-100"} transition ${(containerRef.current?.offsetHeight ?? 0) < maxHeight && "hidden"}`}
+        className={`pointer-events-none absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-background to-background/5 ${expanded ? "opacity-0" : "opacity-100"} transition`}
       ></div>
 
       <div
-        className={`absolute -bottom-9 left-1/2 -translate-x-1/2 cursor-pointer rounded-xl border border-border/75 bg-background px-2 py-1 text-sm ${(containerRef.current?.offsetHeight ?? 0) < 2 * maxHeight && "hidden"}`}
+        className={`absolute -bottom-9 left-1/2 -translate-x-1/2 cursor-pointer rounded-xl border border-border/75 bg-background px-2 py-1 text-sm `}
         onClick={() => setExpanded(!expanded)}
       >
         {expanded ? "свернуть" : "еще"}
