@@ -45,7 +45,7 @@ function EmailItem({ item }: { item: Data }) {
         <h2 className="pr-3 text-left text-lg font-semibold md:text-xl">
           {item.title}
         </h2>
-        <p className="line-clamp-3 text-gray-500 dark:text-gray-400">
+        <p className="line-clamp-3 text-foreground/80 dark:text-gray-400">
           Researchers at the NLMK-FROM institute have developed a new method for
           improving the efficiency of steel production, leading to significant
           cost savings and reduced environmental impact.

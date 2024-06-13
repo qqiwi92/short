@@ -20,5 +20,4 @@ def translate(text):
         },
         headers=headers,
     ).json()
-    print(response)
     return response["translations"][0]["text"]

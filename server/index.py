@@ -11,7 +11,7 @@ def run_command(command):
     return stdout.decode(), stderr.decode()
 
 
-def start_parser():
+def start_cron():
     run_command(["python", "api/start_cron.py"])
 
 
@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
     signal.signal(signal.SIGINT, signal_handler)
 
-    print(colored("+ ", "green"), " starting parser")
+    print(colored("+ ", "green"), " starting cron jobs")
     parser_process = subprocess.Popen(
         ["python", "api/start_cron.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE
     )
@@ -40,7 +40,7 @@ if __name__ == "__main__":
     print("hosting on", colored("http://localhost:5000/data", "blue"))
     print("press Ctrl+C to exit")
     flask_server_process = subprocess.Popen(
-        ["python", "api/flask-server.py"],
+        ["python", "api/flask_server.py"],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )

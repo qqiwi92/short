@@ -20,9 +20,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={montserrat.className + " font px-2 py-20 min-h-screen"}>
-        <div className="mx-auto w-full max-w-6xl">
+    <html lang="en" >
+      <body className={montserrat.className + " "}>
+        <div className="mx-auto w-full max-w-6xl px-2 py-20 min-h-screen">
           <Header />
           {children}
         </div>

@@ -9,6 +9,7 @@ import Letter from "@/components/Letter";
 import { Data } from "@/lib/utils";
 import { Loader } from "@/components/loader";
 import { GoQuestion } from "react-icons/go";
+
 import {
   Tooltip,
   TooltipContent,
@@ -16,6 +17,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { toast, useToast } from "@/components/ui/use-toast";
+import Expand from "@/components/Еxpand";
+import TestingSection from "@/components/TestingSection";
 export default function Page() {
   const [tags, setTags] = useLocalStorageState<string[]>("tag_cloud", {
     defaultValue: defaultValue,
@@ -29,9 +32,13 @@ export default function Page() {
   const [auth, setAuth] = useState(false);
   const [error, setError] = useState<boolean>(false);
   const { toast } = useToast();
-  
+
   const today = new Date();
-  const nextSunday = new Date(today.getFullYear(), today.getMonth(), today.getDate() + (7 - today.getDay()))
+  const nextSunday = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + (7 - today.getDay()),
+  );
   useEffect(() => {
     async function checkAuth() {
       const response = await fetch("/api/checkAuth", {
@@ -112,20 +119,42 @@ export default function Page() {
               <TooltipContent side="right" className="max-w-xs">
                 <p>
                   У вас есть не сохраненные изменения. Чтобы изменить параметры
-                  рассылки, отправате изменения нас сервер
+                  рассылки, отправьте изменения на наш сервер
                 </p>
               </TooltipContent>
             </Tooltip>
           </div>
         </TooltipProvider>
       </div>
+      <TestingSection />
       <div className="flex w-full flex-col items-center justify-center">
         <div className="w-full max-w-4xl">
           <p className="py-1 text-2xl font-bold">Preview письма</p>
-          <p className="pb-2">{new Date().getDay() === 0 ? <span>Это письмо было сгенерировано сегодня и в 00 часов будет отправлено в рассылке </span>: <span>Это письмо прошлой недели, письмо этой недели будет доступно <span className="font-bold tracking-wide px-2 py-1 rounded-xl border">{nextSunday.getDate()}.{String(nextSunday.getMonth() + 1).length === 1 ? "0" + String(nextSunday.getMonth() + 1) : String(nextSunday.getMonth() + 1)}.{nextSunday.getFullYear()}</span></span>} </p>
-          <div className="relative flex w-full flex-wrap items-center overflow-hidden rounded-xl border p-1">
+          <p className="pb-2">
+            {new Date().getDay() === 0 ? (
+              <span>
+                Это письмо было сгенерировано сегодня и в 00 часов будет
+                отправлено в рассылке{" "}
+              </span>
+            ) : (
+              <span>
+                Это письмо содержит неполный набор новостей. Полный digest будет
+                готов{" "}
+                <span className="rounded-xl border px-2 py-1 font-bold tracking-wide">
+                  {nextSunday.getDate()}.
+                  {String(nextSunday.getMonth() + 1).length === 1
+                    ? "0" + String(nextSunday.getMonth() + 1)
+                    : String(nextSunday.getMonth() + 1)}
+                  .{nextSunday.getFullYear()}
+                </span>
+              </span>
+            )}{" "}
+          </p>
+          {/* <div className="relative flex w-full flex-wrap items-center overflow-hidden rounded-xl border p-1"> */}
+          <Expand maxHeight={150}>
             <Letter data={data} />
-          </div>
+          </Expand>
+          {/* </div> */}
         </div>
       </div>
     </div>
@@ -155,7 +184,8 @@ function List({
     ) {
       e.preventDefault();
       toast({
-        title: "это не похоже на email", variant: "destructive",
+        title: "это не похоже на email",
+        variant: "destructive",
         description: (
           <span>
             обычная почта выглядит так <strong>mit.levkin@vk.com</strong>
@@ -196,32 +226,34 @@ function List({
             (разделение по enter)
           </span>
         </p>
-        <div className="relative flex w-full flex-wrap items-center overflow-hidden rounded-xl border p-1">
-          {list.map((tag, index) => (
-            <div
-              key={index}
-              className="relative m-1 select-none rounded-xl bg-secondary px-3 py-1 pr-8 text-lg font-medium transition dark:bg-gray-800"
-            >
-              {tag}
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500 hover:scale-x-110 hover:bg-transparent hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                onClick={() => handleRemoveTag(index)}
+        <Expand>
+          <div className="relative flex w-full flex-wrap items-center overflow-hidden rounded-xl p-1">
+            {list.map((tag, index) => (
+              <div
+                key={index}
+                className="relative m-1 w-fit select-none rounded-xl bg-secondary px-3 py-1 pr-8 text-lg font-medium transition dark:bg-gray-800"
               >
-                <IoMdClose className="h-4 w-4" />
-              </Button>
-            </div>
-          ))}
-          <Input
-            type="text"
-            placeholder="добавить"
-            value={value}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            className="min-w-[100px] flex-1 select-none border-0 text-lg leading-3 focus:outline-0"
-          />
-        </div>
+                {tag}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500 hover:scale-x-110 hover:bg-transparent hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                  onClick={() => handleRemoveTag(index)}
+                >
+                  <IoMdClose className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
+            <Input
+              type="text"
+              placeholder="добавить"
+              value={value}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              className="min-w-[100px] flex-1 select-none border-0 text-lg leading-3 focus:outline-0"
+            />
+          </div>
+        </Expand>
       </div>
     </div>
   );

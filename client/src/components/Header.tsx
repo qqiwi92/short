@@ -9,7 +9,7 @@ import {
 export default function Header() {
   const { scrollY } = useScroll();
 
-  const textSizeLinear = useTransform(scrollY, [0, 80], [4, 1.25]);
+  const textSizeLinear = useTransform(scrollY, [0, 80], [3.6, 1.25]);
   const textSize = useSpring(textSizeLinear, {
     stiffness: 1000,
     damping: 100,

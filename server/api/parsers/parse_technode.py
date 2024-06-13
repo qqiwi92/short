@@ -1,8 +1,11 @@
 from bs4 import BeautifulSoup
 import requests
-import sys 
-sys.path.append('..')
+import sys
+
+sys.path.append("..")
 from utills.translate import translate
+from datetime import datetime
+
 
 def get_html(url):
     try:
@@ -56,6 +59,15 @@ def parse_news_titles(html_content):
         return []
 
 
+def convert_date(date_str):
+    try:
+        date_obj = datetime.strptime(date_str, "%b %d, %Y")
+        return date_obj.strftime("%d.%m.%y")
+    except ValueError as e:
+        print(f"Ошибка преобразования даты: {e}")
+        return date_str
+
+
 def get():
     url = "https://technode.com/tag/ai/"
     html_content = get_html(url)
@@ -69,9 +81,10 @@ def get():
                 {
                     "title": translate(news["title"]),
                     "link": news["link"],
-                    "date": news["date"],
+                    "date": convert_date(news["date"]),
                     "text": translate(article_text),
                 }
             )
 
     return articles
+print(get())
