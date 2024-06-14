@@ -12,7 +12,6 @@ def run_build_command():
             stderr=subprocess.PIPE,
             shell=True, cwd=absolute_dir_path
         )
-        print(result.stdout)
     except Exception as e:
         print(f"An error occurred: {e}")
 

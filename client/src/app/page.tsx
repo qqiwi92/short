@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/tooltip";
 import { toast, useToast } from "@/components/ui/use-toast";
 import Expand from "@/components/Еxpand";
+import Error from "@/components/Error";
 export default function Page() {
   const [tags, setTags] = useState<string[]>([]);
   const [emails, setEmails] = useState<string[]>([]);
@@ -90,107 +91,113 @@ export default function Page() {
     getUserInfo();
   }, []);
   return (
-    <div className="flex min-h-screen flex-col items-center justify-start gap-5">
-      <Loader
-        loading={!auth}
-        loadingStates={[
-          { text: "Проверяем авторизацию" },
-          { text: "Загружаем контент" },
-          { text: "Создаем фичи" },
-        ]}
-        duration={2000}
-      />
-      <div className="flex w-full flex-col gap-2">
-        <List
-          title="Теги"
-          list={tags}
-          setList={setTags}
-          value={newTag}
-          setValue={setNewTag}
-        />
-      </div>
-      <List
-        isEmail
-        title="Емайлы"
-        list={emails}
-        setList={setEmails}
-        value={newEmail}
-        setValue={setNewEmail}
-      />
-      <div className="flex items-center justify-center gap-2">
-      <Button
-          onClick={() => {
-            fetch("/api/send_now", {
-              method: "POST",
-            })
-            toast({ title: "отправляем 👌", variant: "success" });
-          }}
-          className="bg-secondary font-bold transition hover:bg-secondary/75"
-        >
-          отправить сейчас
-        </Button>
-        <Button
-          onClick={() => {
-            fetch("/api/save_user_data", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ tags: tags, emails: emails }),
-            });
-            toast({ title: "Сохранено 👌", variant: "success" });
-          }}
-          className="bg-accent font-bold transition hover:bg-accent/75"
-        >
-          Сохранить
-        </Button>
-       
-        <TooltipProvider>
-          <div className="flex items-center gap-2">
-            <Tooltip delayDuration={50}>
-              <TooltipTrigger>
-                <GoQuestion className="text-xl" />
-              </TooltipTrigger>
-              <TooltipContent side="right" className="max-w-xs">
-                <p>
-                  У вас есть не сохраненные изменения. Чтобы изменить параметры
-                  рассылки, отправьте изменения на наш сервер
-                </p>
-              </TooltipContent>
-            </Tooltip>
+    <>
+      {error ? (
+        <Error/>
+      ) : (
+        <div className="flex min-h-screen flex-col items-center justify-start gap-5">
+          <Loader
+            loading={!auth}
+            loadingStates={[
+              { text: "Проверяем авторизацию" },
+              { text: "Загружаем контент" },
+              { text: "Создаем фичи" },
+            ]}
+            duration={2000}
+          />
+          <div className="flex w-full flex-col gap-2">
+            <List
+              title="Теги"
+              list={tags}
+              setList={setTags}
+              value={newTag}
+              setValue={setNewTag}
+            />
           </div>
-        </TooltipProvider>
-      </div>
-      <div className="flex w-full flex-col items-center justify-center">
-        <div className="w-full max-w-4xl">
-          <p className="py-1 text-2xl font-bold">Preview письма</p>
-          <p className="pb-2">
-            {new Date().getDay() === 0 ? (
-              <span>
-                Это письмо было сгенерировано сегодня и в 00 часов будет
-                отправлено в рассылке{" "}
-              </span>
-            ) : (
-              <span>
-                Это письмо содержит неполный набор новостей. Полный digest будет
-                готов{" "}
-                <span className="rounded-xl border px-2 py-1 font-bold tracking-wide">
-                  {nextSunday.getDate()}.
-                  {String(nextSunday.getMonth() + 1).length === 1
-                    ? "0" + String(nextSunday.getMonth() + 1)
-                    : String(nextSunday.getMonth() + 1)}
-                  .{nextSunday.getFullYear()}
-                </span>
-              </span>
-            )}{" "}
-          </p>
-          <Expand maxHeight={250}>
-            <Letter data={data} />
-          </Expand>
-          {/* </div> */}
+          <List
+            isEmail
+            title="Емайлы"
+            list={emails}
+            setList={setEmails}
+            value={newEmail}
+            setValue={setNewEmail}
+          />
+          <div className="flex items-center justify-center gap-2">
+            <Button
+              onClick={() => {
+                fetch("/api/send_now", {
+                  method: "POST",
+                });
+                toast({ title: "отправляем 👌", variant: "success" });
+              }}
+              className="bg-secondary font-bold transition hover:bg-secondary/75"
+            >
+              отправить сейчас
+            </Button>
+            <Button
+              onClick={() => {
+                fetch("/api/save_user_data", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ tags: tags, emails: emails }),
+                });
+                toast({ title: "Сохранено 👌", variant: "success" });
+              }}
+              className="bg-accent font-bold transition hover:bg-accent/75"
+            >
+              Сохранить
+            </Button>
+
+            <TooltipProvider>
+              <div className="flex items-center gap-2">
+                <Tooltip delayDuration={50}>
+                  <TooltipTrigger>
+                    <GoQuestion className="text-xl" />
+                  </TooltipTrigger>
+                  <TooltipContent side="right" className="max-w-xs">
+                    <p>
+                      У вас есть не сохраненные изменения. Чтобы изменить
+                      параметры рассылки, отправьте изменения на наш сервер
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
+            </TooltipProvider>
+          </div>
+          <div className="flex w-full flex-col items-center justify-center">
+            <div className="w-full max-w-4xl">
+              <p className="py-1 text-2xl font-bold">Preview письма</p>
+              <p className="pb-2">
+                {new Date().getDay() === 0 ? (
+                  <span>
+                    Это письмо было сгенерировано сегодня и в 00 часов будет
+                    отправлено в рассылке{" "}
+                  </span>
+                ) : (
+                  <span>
+                    Это письмо содержит неполный набор новостей. Полный digest
+                    будет готов{" "}
+                    <span className="rounded-xl border px-2 py-1 font-bold tracking-wide">
+                      {nextSunday.getDate()}.
+                      {String(nextSunday.getMonth() + 1).length === 1
+                        ? "0" + String(nextSunday.getMonth() + 1)
+                        : String(nextSunday.getMonth() + 1)}
+                      .{nextSunday.getFullYear()}
+                    </span>
+                  </span>
+                )}{" "}
+              </p>
+              <Expand maxHeight={250}>
+                <Letter data={data} />
+              </Expand>
+              {/* </div> */}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 
