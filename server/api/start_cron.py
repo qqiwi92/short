@@ -49,9 +49,7 @@ def send_now():
 
 def run_schedule():
     schedule.every().seconds.do(collect_files)
-    schedule.every().monday.at("10:00").do(
-        send_now
-    )  # to test change .days -> .seconds
+    schedule.every().monday.at("10:00").do(send_now)  # to test change .days -> .seconds
     while True:
         schedule.run_pending()
 

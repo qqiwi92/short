@@ -45,6 +45,7 @@ def save_user_data():
         json.dump({"tags": tags, "emails": emails}, file, indent=4)
     return {"status": "success"}, 200
 
+
 @app.route("/send_now", methods=["POST"])
 def send_now():
     start_cron.send_now()
