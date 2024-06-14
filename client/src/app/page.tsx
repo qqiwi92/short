@@ -51,7 +51,7 @@ export default function Page() {
     }
     checkAuth();
     async function getNews() {
-      try {
+      
         const response = await fetch(`/api/data`, {
           method: "GET",
           next: {
@@ -63,11 +63,8 @@ export default function Page() {
           setError(true);
         }
         setData(news.data);
-      } catch (error) {
-        setError(true);
+    
       }
-    }
-
     async function getUserInfo() {
       try {
         const response = await fetch(`/api/user_data`, {

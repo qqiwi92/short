@@ -8,8 +8,8 @@ export async function GET() {
   } catch (error) {
     return new Response(
       JSON.stringify({
-        data: mockData,
-        error: false,
+        data: [],
+        error: true,
       }),
       {
         headers: {
