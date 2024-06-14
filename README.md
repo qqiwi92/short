@@ -2,8 +2,8 @@
 
 # Short Hackathon
 
-[демо](https://lems.vercel.app/)
-
+[ссылка на прототип](https://lems.vercel.app/)
+[ссылкк на api](https://sparrow-destined-illegally.ngrok-free.app/data) 
 ## Как установить
 
 Клонируете репозиторий
@@ -21,3 +21,6 @@
    3. Письмо: `npm run mail-dev`
 
 <div style="border-radius: 10px; background-color: #f5f5f5; padding: 10px;margin: 10px 0px">Для разработки функций работы с yandex cloud нужно добавить .env файл в папку server. Чтобы получить это файл пишите <a href="https://t.me/qiwi_92">@qiwi_92</a></div>
+
+
+
