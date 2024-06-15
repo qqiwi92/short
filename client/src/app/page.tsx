@@ -89,19 +89,19 @@ export default function Page() {
   }, []);
   return (
     <>
+        <Loader
+          loading={!auth || data.length === 0}
+          loadingStates={[
+            { text: "Проверяем авторизацию" },
+            { text: "Загружаем контент" },
+            { text: "Создаем фичи" },
+          ]}
+          duration={2000}
+        />
       {error ? (
         <Error/>
       ) : (
         <div className="flex min-h-screen flex-col items-center justify-start gap-5">
-          <Loader
-            loading={!auth}
-            loadingStates={[
-              { text: "Проверяем авторизацию" },
-              { text: "Загружаем контент" },
-              { text: "Создаем фичи" },
-            ]}
-            duration={2000}
-          />
           <div className="flex w-full flex-col gap-2">
             <List
               title="Теги"

@@ -1,6 +1,6 @@
 import json
 from rating.relevance_rate import relevance_rate
-from rating.rate_date import impact_rate
+from rating.rate_date import rate_date
 from rating.impact_rate import impact_rate
 from rating.source_authority import authority_rate
 import time
@@ -19,15 +19,18 @@ def rate(i):
         rated_value -= int(impact_rate(i))
         time.sleep(2)
     except:
-        rated_value = 0
+        rated_value += 0
     try:
-        rated_value += int(impact_rate(i))
+        rated_value += int(rate_date(i))
         time.sleep(2)
     except:
-        rated_value = 0
+        rated_value += 0
     try:
         rated_value += int(authority_rate(i))
         time.sleep(2)
     except:
-        rated_value = 0
+        rated_value += 0
     return rated_value
+
+
+

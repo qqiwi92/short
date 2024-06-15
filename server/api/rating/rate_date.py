@@ -1,5 +1,5 @@
 from datetime import datetime
-def impact_rate(data):
+def rate_date(data):
     date=data["date"]
     now = datetime.now()
     formatted_date = now.strftime("%d.%m.%y")

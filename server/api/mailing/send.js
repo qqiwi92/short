@@ -28,9 +28,9 @@ const transporter = nodemailer.createTransport({
 
 async function sendEmail(to) {
   const options = {
-    from: "mitflash56@gmail.com",
-    to: "mitflash56@gmail.com",
-    subject: "weekly personal newsletter",
+    from: "shorter ai",
+    to: to,
+    subject: "еженедельная персональная рассылка",
     html: emailHtml,
   };
   await transporter.sendMail(options);

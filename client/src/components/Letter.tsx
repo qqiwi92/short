@@ -53,7 +53,7 @@ function EmailItem({ item }: { item: Data }) {
             className="font-medium hover:underline"
             prefetch={false}
           >
-            Read more
+            Читать далее
           </Link>
         </div>
       </div>

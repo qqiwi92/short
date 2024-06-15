@@ -26,10 +26,10 @@ export default function Header() {
           paddingTop: textSizeLinear,
           paddingBottom: textSizeLinear.get() - 1,
         }}
-        className="z-[100] select-none font-bold leading-tight"
+        className="z-[100] flex select-none items-center justify-center gap-2 font-bold leading-tight"
         draggable={false}
       >
-        shorter!
+        <span>shorter!</span>
       </motion.h1>
     </div>
   );

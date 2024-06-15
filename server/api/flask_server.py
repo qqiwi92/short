@@ -21,7 +21,7 @@ def send_data():
     try:
         with open("api/data.json", "r", encoding="utf-8") as file:
             data = json.load(file)
-        return jsonify(data), 200
+        return jsonify(data[:30]), 200
     except FileNotFoundError:
         return jsonify({"error": "File not found"}), 404
 

@@ -16,7 +16,7 @@ import utills.ai_shorten as ai_shorten
 
 
 def collect_files():
-    if not os.path.exists("data.json"):
+    if not os.path.exists("api/data.json"):
         with open("api/data.json", "w", encoding="utf-8") as file:
             json.dump([], file, indent=4)
 
