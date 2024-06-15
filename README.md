@@ -3,7 +3,7 @@
 # Short Hackathon
 
 [ссылка на прототип](https://lems.vercel.app/)
-[ссылкк на api](https://sparrow-destined-illegally.ngrok-free.app/data) 
+[ссылка на api](https://sparrow-destined-illegally.ngrok-free.app/data) 
 ## Как установить
 
 Клонируете репозиторий
